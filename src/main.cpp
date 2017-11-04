@@ -3,17 +3,31 @@
 //
 
 #include <ncurses.h>
+#include "core/Application.hpp"
 
 int main()
 {
-	initscr();
+	/*initscr();
+
+	bool isExit = false;
 	int x,y;
-	getmaxyx(stdscr,y, x); // позволяет определить размер текущего терминала
-	move(y/2, x/2);
-	attron(A_REVERSE);
-	printw("a");
-	attroff(A_REVERSE);
-	getch();
-	endwin();
+	int ch;
+
+	noecho();
+	//raw();
+	//erase()
+	while (!isExit)
+	{
+		getmaxyx(stdscr,y, x); // позволяет определить размер текущего терминала
+		ch = getch();
+		mvprintw(y/2, x/2, "%c[%d]", ch, ch);
+		if(ch == 27) {
+			isExit = true;
+		}
+		refresh();
+	}
+	endwin();*/
+	Core::Application app;
+	app.loop();
 	return 0;
 }

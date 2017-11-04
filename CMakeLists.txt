@@ -25,10 +25,18 @@ set(UTILS_SOURCES_FILES
         src/utils/ListNode.hpp
         )
 
+set(CORE_SOURCES_FILES
+        src/core/Application.cpp
+        src/core/Application.hpp
+        src/core/TickRate.cpp
+        src/core/TickRate.hpp
+        )
+
 set(SOURCE_FILES src/main.cpp)
 
 add_executable(ft_retro ${MODELS_SOURCES_FILES}
         ${UTILS_SOURCES_FILES}
+        ${CORE_SOURCES_FILES}
         ${SOURCE_FILES}
         )
 
