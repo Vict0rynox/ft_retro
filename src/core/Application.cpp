@@ -4,15 +4,17 @@
 
 #include <ncurses.h>
 #include "Application.hpp"
+#include "../model/INcursesView.hpp"
 
 void Core::Application::loop()
 {
 	while (!isExit) { //loop
 		tickRate.calcFps();
 		//if(tickRate.getFps() >= minFPS && tickRate.getFps() <= maxFPS) {
-			control();
-			update();
-			redrow();
+		control();
+		erase();
+		update();
+		redrow();
 		//}
 	}
 	endwin();
@@ -21,25 +23,22 @@ void Core::Application::loop()
 void Core::Application::control()
 {
 	sim = getch(); //get button
-	int x,y;
+	int x, y;
 	getmaxyx(stdscr, y, x);
-	if(y != winSize.getHeight() || x != winSize.getWidth()) {
-		changed();
-	}
 	winSize.setHeight(static_cast<unsigned int>(y));
 	winSize.setWidth(static_cast<unsigned int>(x));
 }
 
 void Core::Application::update()
 {
-	mvprintw(winSize.getHeight()/2, winSize.getWidth()/2, "%c[%d]", sim, sim);
+	mvprintw(winSize.getHeight() / 2, winSize.getWidth() / 2, "%c[%d]", sim, sim);
 
 	Control::IController *controller;
-	while(!controllerList.isEnd())
-	{
+	while (!controllerList.isEnd()) {
 		controller = controllerList.curr();
-		if(controller->isHandle(sim)) {
+		if (controller->isHandle(sim)) {
 			controller->handle(sim);
+			changed();
 		}
 		controllerList.next();
 	}
@@ -48,15 +47,20 @@ void Core::Application::update()
 
 void Core::Application::redrow()
 {
-	if(isChange) {
-		erase();
-		isChange = false;
+
+	View::IViewer *viewer;
+	while (!viewerList.isEnd()) {
+		viewer = viewerList.curr();
+		viewer->render();
+		viewerList.next();
 	}
+	viewerList.reset();
 	refresh();
 }
 
 Core::Application::Application(const Core::Application &rhs)
-		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), isExit(rhs.isExit), isChange(rhs.isChange)
+		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), isExit(rhs.isExit),
+		  isChange(rhs.isChange)
 {
 	_init();
 }
@@ -68,7 +72,8 @@ Core::Application &Core::Application::operator=(const Core::Application &rhs)
 	return *this;
 }
 
-Core::Application::Application() : maxFPS(33), minFPS(29), isExit(false), isChange(false)
+Core::Application::Application() : maxFPS(33), minFPS(29), isExit(false),
+								   isChange(false)
 {
 	_init();
 }
@@ -81,7 +86,10 @@ Core::Application::~Application()
 void Core::Application::_init()
 {
 	initscr();
+	raw();
 	noecho();
+	keypad(stdscr, true);
+	halfdelay(1);
 }
 
 void Core::Application::addController(Control::IController *controller)
@@ -97,4 +105,19 @@ void Core::Application::exit()
 void Core::Application::changed()
 {
 	isChange = true;
+}
+
+void Core::Application::addObject(Model::Object *object)
+{
+	objectsList.pushNode(object);
+}
+
+void Core::Application::addViewer(View::IViewer *viewer)
+{
+	viewerList.pushNode(viewer);
+}
+
+Utils::List<Model::Object *> *Core::Application::getObjectsList()
+{
+	return &objectsList;
 }

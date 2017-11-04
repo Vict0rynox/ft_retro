@@ -7,12 +7,20 @@
 
 
 #include "../model/INcursesView.hpp"
+#include "IViewer.hpp"
 
 namespace View {
-	class ObjectViewer {
-
+	class ObjectViewer : public View::IViewer{
+	protected:
+		Utils::List<Model::Object*> *objectsList;
 	public:
-		void view(Model::INcursesView *view);
+		ObjectViewer();
+		ObjectViewer(Utils::List<Model::Object*> *objectsList);
+		ObjectViewer(const ObjectViewer &rhs);
+		ObjectViewer&operator=(const ObjectViewer &rhs);
+		virtual ~ObjectViewer();
+		void view(Model::Object *object);
+		void render();
 	};
 }
 

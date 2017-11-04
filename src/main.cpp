@@ -3,34 +3,19 @@
 //
 
 #include <ncurses.h>
+#include <clocale>
 #include "core/Application.hpp"
 #include "control/ExitController.hpp"
+#include "model/Player.hpp"
 
 int main()
 {
-	/*initscr();
-
-	bool isExit = false;
-	int x,y;
-	int ch;
-
-	noecho();
-	//raw();
-	//erase()
-	while (!isExit)
-	{
-		getmaxyx(stdscr,y, x); // позволяет определить размер текущего терминала
-		ch = getch();
-		mvprintw(y/2, x/2, "%c[%d]", ch, ch);
-		if(ch == 27) {
-			isExit = true;
-		}
-		refresh();
-	}
-	endwin();*/
+	setlocale(LC_ALL, "");
 	Core::Application *app = new Core::Application();
 
+	app->addObject(new Model::Player("Player1", Model::Position(25,25)));
 	app->addController(new Control::ExitController(app));
+	app->addViewer(new View::ObjectViewer(app->getObjectsList()));
 	app->loop();
 	return 0;
 }

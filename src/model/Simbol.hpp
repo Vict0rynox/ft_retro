@@ -5,24 +5,25 @@
 #ifndef FT_RETRO_SIMBOL_HPP
 #define FT_RETRO_SIMBOL_HPP
 
+#include <string>
 #include "Position.hpp"
 
 namespace Model {
 
 	class Simbol {
 	protected:
-		unsigned int usim;
+		std::string usim;
 		Model::Position position;
 	public:
 		Simbol();
 		~Simbol();
-		Simbol(unsigned int usim, Model::Position position);
+		Simbol(std::string usim, Model::Position position);
 		Simbol(const Simbol &rhs);
 		Simbol&operator=(const Simbol &rhs);
 
-		unsigned int getUsim() const;
+		std::string getUsim() const;
 
-		void setUsim(unsigned int usim);
+		void setUsim(std::string usim);
 
 		const Position &getPosition() const;
 

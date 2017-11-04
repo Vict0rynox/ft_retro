@@ -4,12 +4,12 @@
 
 #include "Simbol.hpp"
 
-unsigned int Model::Simbol::getUsim() const
+std::string Model::Simbol::getUsim() const
 {
 	return usim;
 }
 
-void Model::Simbol::setUsim(unsigned int usim)
+void Model::Simbol::setUsim(std::string usim)
 {
 	this->usim = usim;
 }
@@ -24,7 +24,7 @@ void Model::Simbol::setPosition(const Model::Position &position)
 	this->position = position;
 }
 
-Model::Simbol::Simbol() : usim(0x0), position(Position())
+Model::Simbol::Simbol() : usim(""), position(Position())
 {
 
 }
@@ -46,7 +46,7 @@ Model::Simbol &Model::Simbol::operator=(const Model::Simbol &rhs)
 	return *this;
 }
 
-Model::Simbol::Simbol(unsigned int usim, Model::Position position) : usim(usim), position(position)
+Model::Simbol::Simbol(std::string usim, Model::Position position) : usim(usim), position(position)
 {
 
 }

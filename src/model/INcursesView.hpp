@@ -15,7 +15,7 @@ namespace Model{
 
 	class INcursesView {
 	public:
-		virtual const Utils::List<Model::Simbol>& getView() const = 0;
+		virtual Utils::List<Model::Simbol>* getView() const = 0;
 		virtual const Model::Size& getAreaSize() const = 0;
 	};
 }

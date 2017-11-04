@@ -4,22 +4,22 @@
 
 #include "Player.hpp"
 
-const Utils::List<Model::Simbol>& Model::Player::getView() const
+Utils::List<Model::Simbol>* Model::Player::getView() const
 {
 	return view;
 }
 
 Model::Player::Player()
-		: Model::Unit("Player", Position(0, 0), 100, 10)
+		: Model::Unit("Player", Position(0, 0), 100, 10), view(new Utils::List<Model::Simbol>())
 {
-	view.pushNode(Simbol(0x07C9, Position(0,0)));
+	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0,0)));
 	areaSize = Size(1,1);
 }
 
 Model::Player::Player(std::string name, Model::Position position)
-		: Model::Unit(name, position, 100, 10)
+		: Model::Unit(name, position, 100, 10), view(new Utils::List<Model::Simbol>())
 {
-	view.pushNode(Simbol(0x07C9, Position(0,0)));
+	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0,0)));
 	areaSize = Size(1,1);
 }
 

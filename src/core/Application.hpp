@@ -11,13 +11,11 @@
 #include "../model/Size.hpp"
 #include "../utils/List.hpp"
 #include "../control/IController.hpp"
+#include "../model/Object.hpp"
+#include "../view/ObjectViewer.hpp"
 
 
 namespace Core {
-	class Application;
-
-	typedef void (Application::*exitFunc)();
-
 	class Application {
 	private:
 		void _init();
@@ -25,6 +23,8 @@ namespace Core {
 		int sim;
 	protected:
 		Utils::List<Control::IController*> controllerList;
+		Utils::List<Model::Object*> objectsList;
+		Utils::List<View::IViewer*> viewerList;
 		bool isExit;
 		bool isChange;
 		const float minFPS;
@@ -42,8 +42,12 @@ namespace Core {
 		Application&operator=(const Application &rhs);
 		void loop();
 		void addController(Control::IController *controller);
+		void addObject(Model::Object *object);
+		void addViewer(View::IViewer *viewer);
 		void exit();
 		void changed();
+
+		Utils::List<Model::Object *> *getObjectsList();
 	};
 }
 

@@ -11,9 +11,9 @@
 #include "Size.hpp"
 
 namespace Model {
-	class Player : virtual Model::INcursesView, public Model::Unit{
+	class Player : public Model::INcursesView, public Model::Unit{
 	protected:
-		Utils::List<Model::Simbol> view;
+		Utils::List<Model::Simbol> *view;
 		Model::Size areaSize;
 	public:
 		Player();
@@ -21,7 +21,7 @@ namespace Model {
 		~Player();
 		Player(const Player &rhs);
 		Player&operator=(const Player &rhs);
-		const Utils::List<Model::Simbol>& getView() const;
+		Utils::List<Model::Simbol>* getView() const;
 		const Model::Size& getAreaSize() const;
 	};
 }
