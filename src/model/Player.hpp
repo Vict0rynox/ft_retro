@@ -15,6 +15,8 @@ namespace Model {
 	protected:
 		Utils::List<Model::Simbol> *view;
 		Model::Size areaSize;
+		int moveUDSpeed;
+		int moveLRSpeed;
 	public:
 		Player();
 		Player(std::string name, Model::Position position);
@@ -23,6 +25,10 @@ namespace Model {
 		Player&operator=(const Player &rhs);
 		Utils::List<Model::Simbol>* getView() const;
 		const Model::Size& getAreaSize() const;
+		void moveUp();
+		void moveDown();
+		void moveLeft();
+		void moveRight();
 	};
 }
 

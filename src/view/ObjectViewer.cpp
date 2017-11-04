@@ -20,7 +20,7 @@ void View::ObjectViewer::view(Model::Object *object)
 			mvprintw(object->getPosition().getY() + simbol.getPosition().getY(),
 				object->getPosition().getX() + simbol.getPosition().getX(),
 					 "%s", simbol.getUsim().c_str());
-			points->next();
+			points->prev();
 		}
 		points->reset();
 	}

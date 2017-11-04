@@ -5,7 +5,7 @@
 #ifndef FT_RETRO_APPLICATION_HPP
 #define FT_RETRO_APPLICATION_HPP
 
-
+#include <ncurses.h>
 #include <zconf.h>
 #include "TickRate.hpp"
 #include "../model/Size.hpp"
@@ -21,6 +21,7 @@ namespace Core {
 		void _init();
 		Model::Size winSize;
 		int sim;
+		WINDOW *window;
 	protected:
 		Utils::List<Control::IController*> controllerList;
 		Utils::List<Model::Object*> objectsList;
@@ -47,7 +48,9 @@ namespace Core {
 		void exit();
 		void changed();
 
-		Utils::List<Model::Object *> *getObjectsList();
+		//getter
+		Utils::List<Model::Object *> *getObjectsListPtr();
+		int *getSimPtr();
 	};
 }
 

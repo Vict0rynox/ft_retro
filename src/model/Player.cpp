@@ -4,23 +4,26 @@
 
 #include "Player.hpp"
 
-Utils::List<Model::Simbol>* Model::Player::getView() const
+Utils::List<Model::Simbol> *Model::Player::getView() const
 {
 	return view;
 }
 
 Model::Player::Player()
-		: Model::Unit("Player", Position(0, 0), 100, 10), view(new Utils::List<Model::Simbol>())
+		: moveUDSpeed(1), moveLRSpeed(2),
+		  Model::Unit("Player", Position(0, 0), 100, 10),
+		  view(new Utils::List<Model::Simbol>())
 {
-	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0,0)));
-	areaSize = Size(1,1);
+	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0, 0)));
+	areaSize = Size(1, 1);
 }
 
 Model::Player::Player(std::string name, Model::Position position)
-		: Model::Unit(name, position, 100, 10), view(new Utils::List<Model::Simbol>())
+		: moveUDSpeed(1), moveLRSpeed(2), Model::Unit(name, position, 100, 10),
+		  view(new Utils::List<Model::Simbol>())
 {
-	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0,0)));
-	areaSize = Size(1,1);
+	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0, 0)));
+	areaSize = Size(1, 1);
 }
 
 Model::Player::~Player()
@@ -28,20 +31,45 @@ Model::Player::~Player()
 	//TODO destroy View List
 }
 
-Model::Player::Player(const Model::Player &rhs) : Model::Unit(rhs)
+Model::Player::Player(const Model::Player &rhs)
+		: Model::Unit(rhs), view(new Utils::List<Model::Simbol>())
 {
-	//TODO:: add view and areaSize
+	moveLRSpeed = rhs.moveLRSpeed;
+	moveUDSpeed = rhs.moveUDSpeed;
 }
 
 Model::Player &Model::Player::operator=(const Model::Player &rhs)
 {
-	//TODO:: add view and areaSize
-	return dynamic_cast<Player &>(Model::Unit::operator=(rhs));
+	Model::Unit::operator=(rhs);
+	moveLRSpeed = rhs.moveLRSpeed;
+	moveUDSpeed = rhs.moveUDSpeed;
+	return *this;
 }
 
 const Model::Size &Model::Player::getAreaSize() const
 {
 	return areaSize;
+}
+
+void Model::Player::moveUp()
+{
+	position.setY(position.getY() - moveUDSpeed);
+}
+
+void Model::Player::moveDown()
+{
+	position.setY(position.getY() + moveUDSpeed);
+}
+
+void Model::Player::moveLeft()
+{
+	position.setX(position.getX() - moveLRSpeed);
+
+}
+
+void Model::Player::moveRight()
+{
+	position.setX(position.getX() + moveLRSpeed);
 }
 
 

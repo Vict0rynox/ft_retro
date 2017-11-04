@@ -12,7 +12,8 @@ void Core::Application::loop()
 		tickRate.calcFps();
 		//if(tickRate.getFps() >= minFPS && tickRate.getFps() <= maxFPS) {
 		control();
-		erase();
+		werase(window);
+		box(window, 0, 0);
 		update();
 		redrow();
 		//}
@@ -31,8 +32,6 @@ void Core::Application::control()
 
 void Core::Application::update()
 {
-	mvprintw(winSize.getHeight() / 2, winSize.getWidth() / 2, "%c[%d]", sim, sim);
-
 	Control::IController *controller;
 	while (!controllerList.isEnd()) {
 		controller = controllerList.curr();
@@ -40,7 +39,7 @@ void Core::Application::update()
 			controller->handle(sim);
 			changed();
 		}
-		controllerList.next();
+		controllerList.prev();
 	}
 	controllerList.reset();
 }
@@ -50,16 +49,17 @@ void Core::Application::redrow()
 
 	View::IViewer *viewer;
 	while (!viewerList.isEnd()) {
+
 		viewer = viewerList.curr();
 		viewer->render();
-		viewerList.next();
+		viewerList.prev();
 	}
 	viewerList.reset();
-	refresh();
+	wrefresh(window);
 }
 
 Core::Application::Application(const Core::Application &rhs)
-		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), isExit(rhs.isExit),
+		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), sim(), window(), isExit(rhs.isExit),
 		  isChange(rhs.isChange)
 {
 	_init();
@@ -72,7 +72,7 @@ Core::Application &Core::Application::operator=(const Core::Application &rhs)
 	return *this;
 }
 
-Core::Application::Application() : maxFPS(33), minFPS(29), isExit(false),
+Core::Application::Application() : maxFPS(33), minFPS(29), sim(), window(), isExit(false),
 								   isChange(false)
 {
 	_init();
@@ -86,10 +86,13 @@ Core::Application::~Application()
 void Core::Application::_init()
 {
 	initscr();
+	curs_set(0);
 	raw();
 	noecho();
 	keypad(stdscr, true);
 	halfdelay(1);
+	control();
+	window = newwin(winSize.getHeight() - 5 ,winSize.getWidth(), 5, 0);
 }
 
 void Core::Application::addController(Control::IController *controller)
@@ -117,7 +120,12 @@ void Core::Application::addViewer(View::IViewer *viewer)
 	viewerList.pushNode(viewer);
 }
 
-Utils::List<Model::Object *> *Core::Application::getObjectsList()
+Utils::List<Model::Object *> *Core::Application::getObjectsListPtr()
 {
 	return &objectsList;
+}
+
+int *Core::Application::getSimPtr()
+{
+	return &sim;
 }
