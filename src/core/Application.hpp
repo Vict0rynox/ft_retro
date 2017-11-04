@@ -9,16 +9,24 @@
 #include <zconf.h>
 #include "TickRate.hpp"
 #include "../model/Size.hpp"
+#include "../utils/List.hpp"
+#include "../control/IController.hpp"
 
 
 namespace Core {
+	class Application;
+
+	typedef void (Application::*exitFunc)();
+
 	class Application {
 	private:
 		void _init();
 		Model::Size winSize;
 		int sim;
 	protected:
+		Utils::List<Control::IController*> controllerList;
 		bool isExit;
+		bool isChange;
 		const float minFPS;
 		const float maxFPS;
 
@@ -33,6 +41,9 @@ namespace Core {
 		Application(const Application &rhs);
 		Application&operator=(const Application &rhs);
 		void loop();
+		void addController(Control::IController *controller);
+		void exit();
+		void changed();
 	};
 }
 

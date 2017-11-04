@@ -32,7 +32,7 @@ set(CORE_SOURCES_FILES
         src/core/TickRate.hpp
         )
 
-set(SOURCE_FILES src/main.cpp)
+set(SOURCE_FILES src/main.cpp src/control/IController.hpp src/control/BaseController.cpp src/control/BaseController.hpp src/control/ExitController.cpp src/control/ExitController.hpp src/utils/IIterrator.hpp)
 
 add_executable(ft_retro ${MODELS_SOURCES_FILES}
         ${UTILS_SOURCES_FILES}

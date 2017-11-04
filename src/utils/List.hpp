@@ -3,12 +3,14 @@
 
 #include <stdexcept>
 #include "ListNode.hpp"
+#include "IIterrator.hpp"
 
 namespace Utils {
 	template < class T >
-	class List {
+	class List : public Utils::IIterrator<T> {
 	protected:
 		ListNode<T> *node;
+		ListNode<T> *current;
 	public:
 		List();
 		List(const List &rst);
@@ -18,10 +20,15 @@ namespace Utils {
 		void pushNode(T node);
 		T popNode();
 		T popFrontNode();
+
+		//iterator
+		T curr();
+		void next();
+		void prev();
+		void reset();
+		bool isEnd();
 	};
 }
-
-
 
 template <class T>
 void Utils::List<T>::pushNode(T node) {
@@ -53,6 +60,7 @@ T Utils::List<T>::popNode() {
 template <class T>
 Utils::List<T>::List() {
 	node = nullptr;
+	current = nullptr;
 }
 
 template <class T>
@@ -70,12 +78,14 @@ template <class T>
 Utils::List<T>::List(const Utils::List<T> &rst)
 {
 	node = rst.node;
+	current = rst.current;
 }
 
 template <class T>
 Utils::List<T> &Utils::List<T>::operator=(const Utils::List<T> &rst)
 {
 	node = rst.node;
+	current = rst.current;
 	return *this;
 }
 
@@ -110,6 +120,45 @@ T Utils::List<T>::popFrontNode()
 	val = tmp->getValue();
 	delete tmp;
 	return val;
+}
+
+template <class T>
+T Utils::List<T>::curr()
+{
+	if(current == nullptr) {
+		throw std::length_error("iterator is end");
+	}
+	return current->getValue();
+}
+
+template <class T>
+void Utils::List<T>::next()
+{
+	if(current == nullptr) {
+		throw std::length_error("iterator is end");
+	}
+	current = current->getNext();
+}
+
+template <class T>
+void Utils::List<T>::reset()
+{
+	current = node;
+}
+
+template <class T>
+void Utils::List<T>::prev()
+{
+	if(current == nullptr) {
+		throw std::length_error("iterator is end");
+	}
+	current = current->getPrev();
+}
+
+template <class T>
+bool Utils::List<T>::isEnd()
+{
+	return current == nullptr;
 }
 
 

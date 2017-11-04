@@ -4,6 +4,7 @@
 
 #include <ncurses.h>
 #include "core/Application.hpp"
+#include "control/ExitController.hpp"
 
 int main()
 {
@@ -27,7 +28,9 @@ int main()
 		refresh();
 	}
 	endwin();*/
-	Core::Application app;
-	app.loop();
+	Core::Application *app = new Core::Application();
+
+	app->addController(new Control::ExitController(app));
+	app->loop();
 	return 0;
 }
