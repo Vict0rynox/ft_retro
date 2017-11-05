@@ -59,7 +59,7 @@ namespace Model {
 		Model::Object *UnitFactory<T>::createObject()
 		{
 			int x = 1 + (rand() % static_cast<int>(getmaxx(stdscr) - 1 + 1));
-			Model::Position pos = Model::Position(x, 3);
+			Model::Position pos = Model::Position(x, 0);
 			return new T(objectName, pos, 1, 0);
 		}
 

@@ -9,7 +9,7 @@ void View::ObjectViewer::view(Model::Object *object)
 {
 	Model::INcursesView *view = nullptr;
 
-	if(dynamic_cast<Model::INcursesView *>(object) != nullptr) {
+	if(!object->isDestroy() && dynamic_cast<Model::INcursesView *>(object) != nullptr) {
 
 		view = dynamic_cast<Model::INcursesView *>(object);
 		Utils::List<Model::Simbol> *points = view->getView();
@@ -38,7 +38,7 @@ View::ObjectViewer::ObjectViewer() : objectsList(nullptr)
 	window = newwin(h - 5, w, 5, 0);
 }
 
-View::ObjectViewer::ObjectViewer(const View::ObjectViewer &rhs) : objectsList(rhs.objectsList), window(rhs.window)
+View::ObjectViewer::ObjectViewer(const View::ObjectViewer &rhs) : window(rhs.window), objectsList(rhs.objectsList)
 {
 
 }

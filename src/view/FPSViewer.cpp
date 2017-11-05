@@ -4,7 +4,7 @@
 
 #include "FPSViewer.hpp"
 
-View::FPSViewer::FPSViewer() : tickRate(), window()
+View::FPSViewer::FPSViewer() :  window(), tickRate()
 {
 
 }
@@ -14,7 +14,7 @@ View::FPSViewer::~FPSViewer()
 	delwin(window);
 }
 
-View::FPSViewer::FPSViewer(const View::FPSViewer &rhs) :tickRate(rhs.tickRate), window(rhs.window)
+View::FPSViewer::FPSViewer(const View::FPSViewer &rhs) :window(rhs.window), tickRate(rhs.tickRate)
 {
 
 }
@@ -27,12 +27,14 @@ void View::FPSViewer::render()
 	wrefresh(window);
 }
 
-View::FPSViewer::FPSViewer(Core::TickRate *tickRate, Model::Position position) : tickRate(tickRate), window(newwin(3, 30, position.getY(), position.getX()))
+View::FPSViewer::FPSViewer(Core::TickRate *tickRate, Model::Position position)
+		: window(newwin(3, 30, position.getY(), position.getX())), tickRate(tickRate)
 {
 
 }
 
-View::FPSViewer::FPSViewer(Core::TickRate *tickRate) : tickRate(tickRate), window(newwin(3, 30, 0, 0))
+View::FPSViewer::FPSViewer(Core::TickRate *tickRate)
+		: window(newwin(3, 30, 0, 0)), tickRate(tickRate)
 {
 
 }

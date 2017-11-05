@@ -5,7 +5,7 @@
 #include "Object.hpp"
 #include "Position.hpp"
 
-Model::Object::Object() : name("Object"), position(Model::Position(0,0)), isDestroyed(false)
+Model::Object::Object() : name("Object"), position(Model::Position(0,0)), isDestroyed(false), isNotIntersection(false)
 {
 
 }
@@ -16,13 +16,13 @@ Model::Object::~Object()
 }
 
 Model::Object::Object(const std::string &name,  Model::Position position)
-		: name(name), position(position)
+		: name(name), position(position), isDestroyed(false), isNotIntersection(false)
 {
 
 }
 
 Model::Object::Object(const Model::Object &rhs)
-		: name(rhs.name), position(rhs.position), isDestroyed(rhs.isDestroyed)
+		: name(rhs.name), position(rhs.position), isDestroyed(rhs.isDestroyed), isNotIntersection(false)
 {
 
 }
@@ -58,6 +58,21 @@ bool Model::Object::isDestroy()
 void Model::Object::destroy()
 {
 	isDestroyed = true;
+}
+
+bool Model::Object::isIntersect(const Model::Object &object) {
+	return (!isDestroyed && !isNotIntersection &&
+			object.getPosition().getX() == this->getPosition().getX() &&
+			object.getPosition().getY() == this->getPosition().getY()
+	);
+}
+
+void Model::Object::setNotIntersection(bool isNotIntersection) {
+	Object::isNotIntersection = isNotIntersection;
+}
+
+bool Model::Object::isIsNotIntersection() const {
+	return isNotIntersection;
 }
 
 

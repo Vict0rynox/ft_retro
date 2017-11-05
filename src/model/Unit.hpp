@@ -24,7 +24,7 @@ namespace Model {
 		Unit(const std::string &name, Model::Position position, int maxHealth, int speed, int damage);
 		Unit(const Unit &rhs);
 		Unit&operator=(const Unit &rhs);
-		const int getMaxHealth() const;
+		int getMaxHealth() const;
 		const int& getHealth() const;
 
 		const int& getDamage() const;

@@ -9,6 +9,7 @@ Model::Stars::Stars(): Model::Unit("Stars", Position(0,0), 1, 1),
 {
 	view->pushNode(Simbol("|", Position(0, 0)));
 	areaSize = Size(1, 1);
+	isNotIntersection = true;
 }
 
 Model::Stars::Stars(std::string name, Model::Position position, int speed, int damage)
@@ -17,6 +18,7 @@ Model::Stars::Stars(std::string name, Model::Position position, int speed, int d
 {
 	view->pushNode(Simbol("|", Position(0, 0)));
 	areaSize = Size(1, 1);
+	isNotIntersection = true;
 }
 
 Model::Stars::~Stars()
@@ -25,8 +27,7 @@ Model::Stars::~Stars()
 }
 
 Model::Stars::Stars(const Model::Stars &rhs)
-		: Model::Unit(rhs.name, rhs.position, 1, rhs.damage),
-		  areaSize(rhs.areaSize), view(rhs.view)
+		: Model::Unit(rhs.name, rhs.position, 1, rhs.damage), view(rhs.view), areaSize(rhs.areaSize)
 {
 
 }

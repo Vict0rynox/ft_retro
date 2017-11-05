@@ -15,6 +15,7 @@ namespace Model {
 		const std::string name;
 		Model::Position position;
 		bool isDestroyed;
+		bool isNotIntersection;
 	public:
 		Object();
 		virtual ~Object();
@@ -26,6 +27,9 @@ namespace Model {
 		void setPosition(Model::Position &position);
 		bool isDestroy();
 		void destroy();
+		bool isIntersect(const Object &object);
+		void setNotIntersection(bool notIntersection);
+		bool isIsNotIntersection() const;
 	};
 
 }

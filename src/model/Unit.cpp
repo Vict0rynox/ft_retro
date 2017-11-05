@@ -13,7 +13,7 @@ Model::Unit::Unit(const std::string &name, Model::Position position,
 }
 
 Model::Unit::Unit() :
-		maxHealth(100), Model::Object::Object("Unit", Model::Position(50,50))
+		Model::Object::Object("Unit", Model::Position(50,50)), maxHealth(100)
 {
 	health = maxHealth;
 	damage = 10;
@@ -38,7 +38,7 @@ Model::Unit &Model::Unit::operator=(const Model::Unit &rhs)
 	return *this;
 }
 
-const int Model::Unit::getMaxHealth() const
+int Model::Unit::getMaxHealth() const
 {
 	return maxHealth;
 }

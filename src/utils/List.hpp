@@ -6,6 +6,7 @@
 #include "IIterrator.hpp"
 
 namespace Utils {
+
 	template < class T >
 	class List : public Utils::IIterrator<T> {
 	protected:
@@ -21,6 +22,7 @@ namespace Utils {
 		T popNode();
 		T popFrontNode();
 		void remove(T val);
+		ListNode<T> *getRoot();
 
 		//iterator
 		T curr();
@@ -29,6 +31,78 @@ namespace Utils {
 		void reset();
 		bool isEnd();
 	};
+
+	template <class T>
+	class ListIterator{
+	protected:
+		ListNode<T> *current;
+	public:
+		ListIterator();
+		ListIterator(Utils::List<T> &list);
+		~ListIterator();
+		ListIterator(const ListIterator &rhs);
+		ListIterator&operator=(const ListIterator &rhs);
+
+		T curr();
+		void next();
+		void prev();
+		bool isEnd();
+	};
+
+	template <class T>
+	ListIterator<T>::ListIterator() : current(){
+
+	}
+
+	template <class T>
+	ListIterator<T>::ListIterator(Utils::List<T> &list) {
+		current = list.getRoot();
+	}
+
+	template <class T>
+	ListIterator<T>::~ListIterator() {
+
+	}
+
+	template <class T>
+	ListIterator<T>::ListIterator(const ListIterator<T> &rhs) : current(rhs.current) {
+
+	}
+
+	template <class T>
+	T ListIterator<T>::curr() {
+		if(current == nullptr) {
+			throw std::length_error("iterator is end");
+		}
+		return current->getValue();
+	}
+
+	template <class T>
+	void ListIterator<T>::next() {
+		if(current == nullptr) {
+			throw std::length_error("iterator is end");
+		}
+		current = current->getNext();
+	}
+
+	template <class T>
+	void ListIterator<T>::prev() {
+		if(current == nullptr) {
+			throw std::length_error("iterator is end");
+		}
+		current = current->getPrev();
+	}
+
+	template <class T>
+	bool ListIterator<T>::isEnd() {
+		return current == nullptr;
+	}
+
+	template <class T>
+	ListIterator<T> &ListIterator<T>::operator=(const ListIterator<T> &rhs) {
+		current = rhs.current;
+		return *this;
+	}
 }
 
 template <class T>
@@ -176,6 +250,11 @@ void Utils::List<T>::remove(T val)
 			delete tmpNode;
 		}
 	}
+}
+
+template <class T>
+Utils::ListNode<T> *Utils::List<T>::getRoot() {
+	return node;
 }
 
 

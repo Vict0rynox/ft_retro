@@ -16,6 +16,7 @@
 #include "model/Stars.hpp"
 #include "event/ObjectCreatorEvent.hpp"
 #include "model/Enemies.hpp"
+#include "event/GameOverEvent.hpp"
 
 int main()
 {
@@ -32,7 +33,8 @@ int main()
 	app->addViewer(new View::ButtonKeyViewer(app->getSimPtr(), Model::Position(0,0)));
 	app->addViewer(new View::FPSViewer(app->getTickRatePtr(), Model::Position(20,0)));
 	app->addEvent(new Event::ObjectCreatorEvent(app->getObjectsListPtr(), app->getEventsListPtr(), starsFactory, 0));
-	app->addEvent(new Event::ObjectCreatorEvent(app->getObjectsListPtr(), app->getEventsListPtr(), enemiesFactory, 3));
+	app->addEvent(new Event::ObjectCreatorEvent(app->getObjectsListPtr(), app->getEventsListPtr(), enemiesFactory, 1));
+	app->addEvent(new Event::GameOverEvent(player));
 	app->loop();
 	return 0;
 }

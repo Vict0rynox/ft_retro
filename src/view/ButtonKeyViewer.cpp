@@ -15,7 +15,7 @@ View::ButtonKeyViewer::~ButtonKeyViewer()
 	delwin(window);
 }
 
-View::ButtonKeyViewer::ButtonKeyViewer(const View::ButtonKeyViewer &rhs) :sim(rhs.sim), window(rhs.window)
+View::ButtonKeyViewer::ButtonKeyViewer(const View::ButtonKeyViewer &rhs) : window(rhs.window), sim(rhs.sim)
 {
 
 }
@@ -28,7 +28,8 @@ View::ButtonKeyViewer::operator=(const View::ButtonKeyViewer &rhs)
 	return *this;
 }
 
-View::ButtonKeyViewer::ButtonKeyViewer(int *sim, Model::Position position) : sim(sim), window(newwin(3, 15, position.getY(), position.getX()))
+View::ButtonKeyViewer::ButtonKeyViewer(int *sim, Model::Position position)
+		:  window(newwin(3, 15, position.getY(), position.getX())), sim(sim)
 {
 
 }
@@ -41,7 +42,7 @@ void View::ButtonKeyViewer::render()
 	wrefresh(window);
 }
 
-View::ButtonKeyViewer::ButtonKeyViewer(int *sim) : sim(sim), window(newwin(3, 15, 0,0))
+View::ButtonKeyViewer::ButtonKeyViewer(int *sim) :  window(newwin(3, 15, 0,0)), sim(sim)
 {
 
 }

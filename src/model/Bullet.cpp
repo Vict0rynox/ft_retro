@@ -26,7 +26,7 @@ Model::Bullet::~Bullet()
 
 Model::Bullet::Bullet(const Model::Bullet &rhs)
 		: Model::Unit(rhs.name, rhs.position, 1, rhs.damage),
-		  areaSize(rhs.areaSize), view(rhs.view)
+		  view(rhs.view), areaSize(rhs.areaSize)
 {
 
 }

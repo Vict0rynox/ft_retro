@@ -31,14 +31,14 @@ Event::ObjectCreatorEvent::ObjectCreatorEvent(
 		Utils::List<Event::IEvent *> *eventsList,
 		Model::Factory::IObjectFactory *factory,
         time_t duration
-) : objectsList(objectsList),
-												   eventsList(eventsList), createTime(), factory(factory), duration(duration)
+) :
+	  factory(factory), objectsList(objectsList), eventsList(eventsList), createTime(), duration(duration)
 {
 
 }
 
-Event::ObjectCreatorEvent::ObjectCreatorEvent() : objectsList(), createTime(),
-												  duration(1), factory(), eventsList()
+Event::ObjectCreatorEvent::ObjectCreatorEvent() :
+												  factory(), objectsList(), eventsList(), createTime(), duration(1)
 {
 
 }
@@ -50,8 +50,8 @@ Event::ObjectCreatorEvent::~ObjectCreatorEvent()
 
 Event::ObjectCreatorEvent::ObjectCreatorEvent(
 		const Event::ObjectCreatorEvent &rhs)
-		: objectsList(rhs.objectsList), createTime(rhs.createTime),
-		  duration(rhs.duration), factory(rhs.factory), eventsList(rhs.eventsList)
+		: factory(rhs.factory), objectsList(rhs.objectsList), eventsList(rhs.eventsList), createTime(rhs.createTime),
+		   duration(rhs.duration)
 {
 
 }

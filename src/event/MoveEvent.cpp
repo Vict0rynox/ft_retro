@@ -32,9 +32,8 @@ Event::MoveEvent &Event::MoveEvent::operator=(const Event::MoveEvent &rhs)
 
 void Event::MoveEvent::handle()
 {
-	if(!object->isDestroy()) {
-		Model::Position newPos = Model::Position(object->getPosition().getX(),
-												 object->getPosition().getY() + speed);
+	if(object != nullptr && !object->isDestroy()) {
+		Model::Position newPos = Model::Position(object->getPosition().getX(), object->getPosition().getY() + speed);
 		object->setPosition(newPos);
 	}
 }

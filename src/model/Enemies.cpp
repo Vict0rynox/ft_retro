@@ -26,7 +26,7 @@ Model::Enemies::~Enemies()
 
 Model::Enemies::Enemies(const Model::Enemies &rhs)
 		: Model::Unit(rhs.name, rhs.position, 1, rhs.damage),
-		  areaSize(rhs.areaSize), view(rhs.view)
+		   view(rhs.view), areaSize(rhs.areaSize)
 {
 
 }

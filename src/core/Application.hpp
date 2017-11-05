@@ -25,6 +25,7 @@ namespace Core {
 	protected:
 		Utils::List<Control::IController *> controllerList;
 		Utils::List<Model::Object *> objectsList;
+		Utils::List<Model::Object *> trashObjectsList;
 		Utils::List<View::IViewer *> viewerList;
 		Utils::List<Event::IEvent *> eventsList;
 		bool isExit;
@@ -41,6 +42,10 @@ namespace Core {
 		void redrow();
 
 		void eventHandle();
+
+		void intersections();
+
+		void garbregCollection();
 
 	public:
 		Application();

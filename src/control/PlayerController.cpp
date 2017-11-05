@@ -43,12 +43,12 @@ Control::PlayerController::~PlayerController()
 Control::PlayerController::PlayerController(Model::Player *player,
 											Utils::List<Event::IEvent *> *eventList,
 											Utils::List<Model::Object *> *objectsList)
-		: player(player), moveUpButtonKeyCode(KEY_UP),
+		: moveUpButtonKeyCode(KEY_UP),
 		  moveDownButtonKeyCode(KEY_DOWN),
 		  moveLeftButtonKeyCode(KEY_LEFT),
 		  moveRightButtonKeyCode(KEY_RIGHT),
 		  shootButtonKeyCode(32),
-		  eventList(eventList), objectsList(objectsList)
+          player(player), eventList(eventList),  objectsList(objectsList)
 {
 
 }
@@ -73,32 +73,33 @@ Control::PlayerController::PlayerController(Model::Player *player,
 
 bool Control::PlayerController::isHandle(int buttonCode)
 {
-	return (buttonCode == moveUpButtonKeyCode ||
+	return (!player->isDestroy() && (buttonCode == moveUpButtonKeyCode ||
 			buttonCode == moveDownButtonKeyCode ||
 			buttonCode == moveLeftButtonKeyCode ||
 			buttonCode == moveRightButtonKeyCode ||
-			buttonCode == shootButtonKeyCode
+			buttonCode == shootButtonKeyCode)
 	);
 }
 
 void Control::PlayerController::handle(int buttonCode)
 {
-
-	if (buttonCode == moveUpButtonKeyCode) {
-		player->moveUp();
-	} else if (buttonCode == moveDownButtonKeyCode) {
-		player->moveDown();
-	} else if (buttonCode == moveLeftButtonKeyCode) {
-		player->moveLeft();
-	} else if (buttonCode == moveRightButtonKeyCode) {
-		player->moveRight();
-	} else if (buttonCode == shootButtonKeyCode) {
-		Model::Bullet *bullet = new Model::Bullet("bullet",
-												  Model::Position(
-														  player->getPosition().getX(),
-														  player->getPosition().getY()),
-												  -1, player->getDamage());
-		objectsList->pushNode(bullet);
-		eventList->pushNode(new Event::MoveEvent(bullet, bullet->getSpeed()));
+	if(!player->isDestroy()) {
+		if (buttonCode == moveUpButtonKeyCode) {
+			player->moveUp();
+		} else if (buttonCode == moveDownButtonKeyCode) {
+			player->moveDown();
+		} else if (buttonCode == moveLeftButtonKeyCode) {
+			player->moveLeft();
+		} else if (buttonCode == moveRightButtonKeyCode) {
+			player->moveRight();
+		} else if (buttonCode == shootButtonKeyCode) {
+			Model::Bullet *bullet = new Model::Bullet("bullet",
+													  Model::Position(
+															  player->getPosition().getX(),
+															  player->getPosition().getY()-1),
+													  -1, player->getDamage());
+			objectsList->pushNode(bullet);
+			eventList->pushNode(new Event::MoveEvent(bullet, bullet->getSpeed()));
+		}
 	}
 }

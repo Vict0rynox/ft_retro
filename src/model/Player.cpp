@@ -10,17 +10,16 @@ Utils::List<Model::Simbol> *Model::Player::getView() const
 }
 
 Model::Player::Player()
-		: moveUDSpeed(1), moveLRSpeed(2),
-		  Model::Unit("Player", Position(0, 0), 100, 10),
-		  view(new Utils::List<Model::Simbol>())
+		: Model::Unit("Player", Position(0, 0), 100, 10),
+		  view(new Utils::List<Model::Simbol>()), moveUDSpeed(1), moveLRSpeed(2)
 {
 	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0, 0)));
 	areaSize = Size(1, 1);
 }
 
 Model::Player::Player(std::string name, Model::Position position)
-		: moveUDSpeed(1), moveLRSpeed(2), Model::Unit(name, position, 100, 10),
-		  view(new Utils::List<Model::Simbol>())
+		:   Model::Unit(name, position, 100, 10),
+		  view(new Utils::List<Model::Simbol>()), moveUDSpeed(1), moveLRSpeed(2)
 {
 	view->pushNode(Simbol("\xf0\x90\x8D\x88", Position(0, 0)));
 	areaSize = Size(1, 1);
