@@ -66,7 +66,7 @@ void View::ObjectViewer::render()
 	while (!objectsList->isEnd()) {
 		object = objectsList->curr();
 		view(object);
-		objectsList->next();
+		objectsList->prev();
 	}
 	objectsList->reset();
 	wrefresh(window);

@@ -14,6 +14,7 @@ namespace Model {
 	protected:
 		const std::string name;
 		Model::Position position;
+		bool isDestroyed;
 	public:
 		Object();
 		virtual ~Object();
@@ -23,6 +24,8 @@ namespace Model {
 		const Model::Position& getPosition() const;
 		const std::string& getName() const;
 		void setPosition(Model::Position &position);
+		bool isDestroy();
+		void destroy();
 	};
 
 }

@@ -46,6 +46,7 @@ namespace Core {
 		void addController(Control::IController *controller);
 		void addObject(Model::Object *object);
 		void addViewer(View::IViewer *viewer);
+		void addEvent(Event::IEvent *event);
 		void exit();
 		void changed();
 

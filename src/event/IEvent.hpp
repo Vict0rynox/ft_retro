@@ -9,6 +9,7 @@ namespace Event {
 
 	class IEvent {
 	public:
+		//virtual ~IEvent();
 		virtual void handle() = 0;
 		virtual bool isEnd() = 0;
 	};

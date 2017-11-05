@@ -5,7 +5,7 @@
 #include "Object.hpp"
 #include "Position.hpp"
 
-Model::Object::Object() : name("Object"), position(Model::Position(0,0))
+Model::Object::Object() : name("Object"), position(Model::Position(0,0)), isDestroyed(false)
 {
 
 }
@@ -22,14 +22,16 @@ Model::Object::Object(const std::string &name,  Model::Position position)
 }
 
 Model::Object::Object(const Model::Object &rhs)
-		: name(rhs.name), position(rhs.position)
+		: name(rhs.name), position(rhs.position), isDestroyed(rhs.isDestroyed)
 {
 
 }
 
 Model::Object &Model::Object::operator=(const Model::Object &rhs)
 {
-	(void)rhs;
+	position = rhs.position;
+	isDestroyed = rhs.isDestroyed;
+
 	return *this;
 }
 
@@ -46,6 +48,16 @@ const std::string &Model::Object::getName() const
 void Model::Object::setPosition(Model::Position &position)
 {
 	this->position = position;
+}
+
+bool Model::Object::isDestroy()
+{
+	return isDestroyed;
+}
+
+void Model::Object::destroy()
+{
+	isDestroyed = true;
 }
 
 

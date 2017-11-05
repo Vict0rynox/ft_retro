@@ -166,11 +166,14 @@ template <class T>
 void Utils::List<T>::remove(T val)
 {
 	ListNode<T> *listNode;
-	while(node != nullptr){
-		listNode = node;
-		node = listNode->getPrev();
-		if(listNode->getValue() == val) {
-			delete listNode;
+	ListNode<T> *tmpNode;
+
+	listNode = node;
+	while(listNode != nullptr){
+		tmpNode = listNode;
+		listNode = listNode->getPrev();
+		if(tmpNode->getValue() == val) {
+			delete tmpNode;
 		}
 	}
 }

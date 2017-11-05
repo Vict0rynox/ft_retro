@@ -15,6 +15,7 @@ void Core::Application::loop()
 		//if (tickRate.getFps() <= maxFPS) {
 			control();
 			update();
+			eventHandle();
 			redrow();
 		//}
 	}
@@ -67,6 +68,7 @@ void Core::Application::eventHandle()
 		event->handle();
 		eventList.prev();
 		if(event->isEnd()){
+			eventList.remove(event);
 			delete event;
 		}
 	}
@@ -148,4 +150,9 @@ int *Core::Application::getSimPtr()
 Core::TickRate *Core::Application::getTickRatePtr()
 {
 	return &tickRate;
+}
+
+void Core::Application::addEvent(Event::IEvent *event)
+{
+	eventList.pushNode(event);
 }
