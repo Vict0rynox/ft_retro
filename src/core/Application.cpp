@@ -62,17 +62,17 @@ void Core::Application::redrow()
 void Core::Application::eventHandle()
 {
 	Event::IEvent *event;
-	while (!eventList.isEnd()) {
+	while (!eventsList.isEnd()) {
 
-		event = eventList.curr();
+		event = eventsList.curr();
 		event->handle();
-		eventList.prev();
+		eventsList.prev();
 		if(event->isEnd()){
-			eventList.remove(event);
+			eventsList.remove(event);
 			delete event;
 		}
 	}
-	eventList.reset();
+	eventsList.reset();
 }
 
 
@@ -154,5 +154,10 @@ Core::TickRate *Core::Application::getTickRatePtr()
 
 void Core::Application::addEvent(Event::IEvent *event)
 {
-	eventList.pushNode(event);
+	eventsList.pushNode(event);
+}
+
+Utils::List<Event::IEvent *> *Core::Application::getEventsListPtr()
+{
+	return &eventsList;
 }

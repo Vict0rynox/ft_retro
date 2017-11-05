@@ -7,6 +7,7 @@
 
 #include "IController.hpp"
 #include "../model/Player.hpp"
+#include "../event/IEvent.hpp"
 
 namespace Control {
 	class PlayerController : public Control::IController {
@@ -16,16 +17,24 @@ namespace Control {
 		const int moveLeftButtonKeyCode;
 		const int moveRightButtonKeyCode;
 		const int shootButtonKeyCode;
+
 		Model::Player *player;
+		Utils::List<Event::IEvent*> *eventList;
+		Utils::List<Model::Object*> *objectsList;
 	public:
 		PlayerController();
-		PlayerController(Model::Player *player);
+		PlayerController(Model::Player *player,
+						 Utils::List<Event::IEvent *> *eventList,
+						 Utils::List<Model::Object *> *objectsList);
 		PlayerController(const PlayerController &rhs);
 		PlayerController&operator=(const PlayerController &rhs);
 
 		~PlayerController();
 
-		PlayerController(Model::Player *player, int moveUpButtonKeyCode, int moveDownButtonKeyCode,
+		PlayerController(Model::Player *player,
+						 Utils::List<Event::IEvent*> *eventList,
+						 Utils::List<Model::Object*> *objectsList,
+						 int moveUpButtonKeyCode, int moveDownButtonKeyCode,
 						 int moveLeftButtonKeyCode, int moveRightButtonKeyCode,
 						 int shootButtonKeyCode);
 

@@ -9,10 +9,10 @@ namespace Event {
 
 	class IEvent {
 	public:
-		//virtual ~IEvent();
+		virtual ~IEvent();
 		virtual void handle() = 0;
 		virtual bool isEnd() = 0;
 	};
-
 }
+
 #endif //FT_RETRO_IEVENT_HPP

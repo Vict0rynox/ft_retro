@@ -19,13 +19,14 @@ namespace Core {
 	class Application {
 	private:
 		void _init();
+
 		Model::Size winSize;
 		int sim;
 	protected:
-		Utils::List<Control::IController*> controllerList;
-		Utils::List<Model::Object*> objectsList;
-		Utils::List<View::IViewer*> viewerList;
-		Utils::List<Event::IEvent*> eventList;
+		Utils::List<Control::IController *> controllerList;
+		Utils::List<Model::Object *> objectsList;
+		Utils::List<View::IViewer *> viewerList;
+		Utils::List<Event::IEvent *> eventsList;
 		bool isExit;
 		bool isChange;
 		const float minFPS;
@@ -34,25 +35,43 @@ namespace Core {
 		Core::TickRate tickRate;
 
 		void control();
+
 		void update();
+
 		void redrow();
+
 		void eventHandle();
+
 	public:
 		Application();
+
 		~Application();
+
 		Application(const Application &rhs);
-		Application&operator=(const Application &rhs);
+
+		Application &operator=(const Application &rhs);
+
 		void loop();
+
 		void addController(Control::IController *controller);
+
 		void addObject(Model::Object *object);
+
 		void addViewer(View::IViewer *viewer);
+
 		void addEvent(Event::IEvent *event);
+
 		void exit();
+
 		void changed();
 
 		//getter
 		Utils::List<Model::Object *> *getObjectsListPtr();
+
+		Utils::List<Event::IEvent *> *getEventsListPtr();
+
 		int *getSimPtr();
+
 		Core::TickRate *getTickRatePtr();
 	};
 }

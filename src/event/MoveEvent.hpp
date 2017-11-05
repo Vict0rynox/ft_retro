@@ -16,12 +16,11 @@ namespace Event {
 	public:
 		MoveEvent();
 		MoveEvent(Model::Object *object, int speed);
-		~MoveEvent();
+		virtual ~MoveEvent();
 		MoveEvent(const MoveEvent &rhs);
 		MoveEvent&operator=(const MoveEvent &rhs);
 
 		void handle();
-
 		bool isEnd();
 	};
 }

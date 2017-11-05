@@ -4,6 +4,8 @@
 
 #include <ncurses.h>
 #include "PlayerController.hpp"
+#include "../model/Bullet.hpp"
+#include "../event/MoveEvent.hpp"
 
 Control::PlayerController::PlayerController()
 		: moveUpButtonKeyCode(KEY_UP),
@@ -38,17 +40,22 @@ Control::PlayerController::~PlayerController()
 
 }
 
-Control::PlayerController::PlayerController(Model::Player *player)
+Control::PlayerController::PlayerController(Model::Player *player,
+											Utils::List<Event::IEvent *> *eventList,
+											Utils::List<Model::Object *> *objectsList)
 		: player(player), moveUpButtonKeyCode(KEY_UP),
 		  moveDownButtonKeyCode(KEY_DOWN),
 		  moveLeftButtonKeyCode(KEY_LEFT),
 		  moveRightButtonKeyCode(KEY_RIGHT),
-		  shootButtonKeyCode(32)
+		  shootButtonKeyCode(32),
+		  eventList(eventList), objectsList(objectsList)
 {
 
 }
 
 Control::PlayerController::PlayerController(Model::Player *player,
+											Utils::List<Event::IEvent *> *eventList,
+											Utils::List<Model::Object *> *objectsList,
 											int moveUpButtonKeyCode,
 											int moveDownButtonKeyCode,
 											int moveLeftButtonKeyCode,
@@ -58,7 +65,8 @@ Control::PlayerController::PlayerController(Model::Player *player,
 		  moveDownButtonKeyCode(moveDownButtonKeyCode),
 		  moveLeftButtonKeyCode(moveLeftButtonKeyCode),
 		  moveRightButtonKeyCode(moveRightButtonKeyCode),
-		  shootButtonKeyCode(shootButtonKeyCode), player(player)
+		  shootButtonKeyCode(shootButtonKeyCode), player(player),
+		  eventList(eventList), objectsList(objectsList)
 {
 
 }
@@ -85,6 +93,12 @@ void Control::PlayerController::handle(int buttonCode)
 	} else if (buttonCode == moveRightButtonKeyCode) {
 		player->moveRight();
 	} else if (buttonCode == shootButtonKeyCode) {
-		//TODO: shoot
+		Model::Bullet *bullet = new Model::Bullet("bullet",
+												  Model::Position(
+														  player->getPosition().getX(),
+														  player->getPosition().getY()),
+												  -1, player->getDamage());
+		objectsList->pushNode(bullet);
+		eventList->pushNode(new Event::MoveEvent(bullet, bullet->getSpeed()));
 	}
 }

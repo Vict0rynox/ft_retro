@@ -9,6 +9,7 @@ Model::Unit::Unit(const std::string &name, Model::Position position,
 	: Model::Object::Object(name, position), maxHealth(maxHealth), damage(damage)
 {
 	health = maxHealth;
+	speed = 1;
 }
 
 Model::Unit::Unit() :
@@ -55,4 +56,16 @@ const int& Model::Unit::getDamage() const
 void Model::Unit::setDamage(int damage)
 {
 	this->damage = damage;
+}
+
+int Model::Unit::getSpeed() const
+{
+	return speed;
+}
+
+Model::Unit::Unit(const std::string &name, Model::Position position,
+				  int maxHealth, int speed, int damage)
+		: Model::Object::Object(name, position), maxHealth(maxHealth), damage(damage), speed(speed)
+{
+	health = maxHealth;
 }

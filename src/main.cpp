@@ -12,23 +12,27 @@
 #include "view/FPSViewer.hpp"
 #include "event/MoveEvent.hpp"
 #include "model/Bullet.hpp"
+#include "model/factory/UnitFactory.hpp"
+#include "model/Stars.hpp"
+#include "event/ObjectCreatorEvent.hpp"
+#include "model/Enemies.hpp"
 
 int main()
 {
 	setlocale(LC_ALL, "");
 	Core::Application *app = new Core::Application();
-
 	Model::Player *player = new Model::Player("Player1", Model::Position(25,25));
-	Model::Bullet *bullet = new Model::Bullet("bullet", Model::Position(25,25), -1, 1);
+	Model::Factory::IObjectFactory *starsFactory = new Model::Factory::UnitFactory<Model::Stars>("Starts");
+	Model::Factory::IObjectFactory *enemiesFactory = new Model::Factory::UnitFactory<Model::Enemies>("Enemies");
 
 	app->addObject(player);
-	app->addObject(bullet);
 	app->addController(new Control::ExitController(app));
-	app->addController(new Control::PlayerController(player));
+	app->addController(new Control::PlayerController(player,app->getEventsListPtr() ,app->getObjectsListPtr()));
 	app->addViewer(new View::ObjectViewer(app->getObjectsListPtr()));
 	app->addViewer(new View::ButtonKeyViewer(app->getSimPtr(), Model::Position(0,0)));
 	app->addViewer(new View::FPSViewer(app->getTickRatePtr(), Model::Position(20,0)));
-	app->addEvent(new Event::MoveEvent(bullet, bullet->getSpeed()));
+	app->addEvent(new Event::ObjectCreatorEvent(app->getObjectsListPtr(), app->getEventsListPtr(), starsFactory, 0));
+	app->addEvent(new Event::ObjectCreatorEvent(app->getObjectsListPtr(), app->getEventsListPtr(), enemiesFactory, 3));
 	app->loop();
 	return 0;
 }

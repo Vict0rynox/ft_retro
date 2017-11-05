@@ -17,7 +17,6 @@ Event::MoveEvent::MoveEvent() : object(), speed()
 
 Event::MoveEvent::~MoveEvent()
 {
-
 }
 
 Event::MoveEvent::MoveEvent(const Event::MoveEvent &rhs) : object(rhs.object), speed(rhs.speed)

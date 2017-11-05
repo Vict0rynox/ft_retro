@@ -53,8 +53,3 @@ int Model::Bullet::getSpeed() const
 {
 	return speed;
 }
-
-int Model::Bullet::getDamage() const
-{
-	return damage;
-}
