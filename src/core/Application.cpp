@@ -3,6 +3,8 @@
 //
 
 #include <ncurses.h>
+#include <zconf.h>
+#include <cmath>
 #include "Application.hpp"
 #include "../model/INcursesView.hpp"
 
@@ -10,13 +12,12 @@ void Core::Application::loop()
 {
 	while (!isExit) { //loop
 		tickRate.calcFps();
-		//if(tickRate.getFps() >= minFPS && tickRate.getFps() <= maxFPS) {
-		control();
-		werase(window);
-		box(window, 0, 0);
-		update();
-		redrow();
-		//}
+		double sleepTime = 0;
+		if (tickRate.getFps() <= maxFPS) {
+			control();
+			update();
+			redrow();
+		}
 	}
 	endwin();
 }
@@ -55,11 +56,11 @@ void Core::Application::redrow()
 		viewerList.prev();
 	}
 	viewerList.reset();
-	wrefresh(window);
+	refresh();
 }
 
 Core::Application::Application(const Core::Application &rhs)
-		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), sim(), window(), isExit(rhs.isExit),
+		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), sim(), isExit(rhs.isExit),
 		  isChange(rhs.isChange)
 {
 	_init();
@@ -72,7 +73,7 @@ Core::Application &Core::Application::operator=(const Core::Application &rhs)
 	return *this;
 }
 
-Core::Application::Application() : maxFPS(33), minFPS(29), sim(), window(), isExit(false),
+Core::Application::Application() : maxFPS(200), minFPS(29), sim(), isExit(false),
 								   isChange(false)
 {
 	_init();
@@ -92,7 +93,6 @@ void Core::Application::_init()
 	keypad(stdscr, true);
 	halfdelay(1);
 	control();
-	window = newwin(winSize.getHeight() - 5 ,winSize.getWidth(), 5, 0);
 }
 
 void Core::Application::addController(Control::IController *controller)
@@ -128,4 +128,9 @@ Utils::List<Model::Object *> *Core::Application::getObjectsListPtr()
 int *Core::Application::getSimPtr()
 {
 	return &sim;
+}
+
+Core::TickRate *Core::Application::getTickRatePtr()
+{
+	return &tickRate;
 }

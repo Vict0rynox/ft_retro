@@ -9,6 +9,7 @@
 #include "model/Player.hpp"
 #include "view/ButtonKeyViewer.hpp"
 #include "control/PlayerController.hpp"
+#include "view/FPSViewer.hpp"
 
 int main()
 {
@@ -21,6 +22,7 @@ int main()
 	app->addController(new Control::PlayerController(player));
 	app->addViewer(new View::ObjectViewer(app->getObjectsListPtr()));
 	app->addViewer(new View::ButtonKeyViewer(app->getSimPtr(), Model::Position(0,0)));
+	app->addViewer(new View::FPSViewer(app->getTickRatePtr(), Model::Position(20,0)));
 	app->loop();
 	return 0;
 }

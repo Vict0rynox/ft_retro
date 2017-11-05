@@ -5,16 +5,21 @@
 #ifndef FT_RETRO_TICKRATE_HPP
 #define FT_RETRO_TICKRATE_HPP
 
+#include <ctime>
+
 namespace Core {
 	class TickRate {
 	protected:
 		clock_t oldTick;
 		clock_t curTick;
-		clock_t elapsedTime;
-		clock_t frame;
 		float fps;
+		double averageFrameTimeMilliseconds;
+		float deltaTick;
+		long frame;
 	public:
 		TickRate();
+
+		double getAverageFrameTimeMilliseconds() const;
 
 		~TickRate();
 
@@ -25,10 +30,6 @@ namespace Core {
 		clock_t getOldTick() const;
 
 		clock_t getCurTick() const;
-
-		clock_t getElapsedTime() const;
-
-		clock_t getFrame() const;
 
 		float getFps() const;
 

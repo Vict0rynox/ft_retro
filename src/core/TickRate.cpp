@@ -3,6 +3,7 @@
 //
 
 #include <ctime>
+#include <cstdlib>
 #include "TickRate.hpp"
 
 clock_t Core::TickRate::getOldTick() const
@@ -15,22 +16,13 @@ clock_t Core::TickRate::getCurTick() const
 	return curTick;
 }
 
-clock_t Core::TickRate::getElapsedTime() const
-{
-	return elapsedTime;
-}
-
-clock_t Core::TickRate::getFrame() const
-{
-	return frame;
-}
-
 float Core::TickRate::getFps() const
 {
 	return fps;
 }
 
-Core::TickRate::TickRate() : oldTick(0), curTick(0), elapsedTime(0), frame(0), fps(0)
+Core::TickRate::TickRate() : oldTick(0), curTick(0), fps(10),
+							 deltaTick()
 {
 
 }
@@ -44,27 +36,36 @@ Core::TickRate &Core::TickRate::operator=(const Core::TickRate &rhs)
 {
 	oldTick =rhs.oldTick;
 	curTick =rhs.curTick;
-	elapsedTime =rhs.elapsedTime;
-	frame =rhs.frame;
 	fps= rhs.fps;
 	return *this;
 }
 
 Core::TickRate::TickRate(const Core::TickRate &rhs)
 		: oldTick(rhs.oldTick), curTick(rhs.curTick),
-		  elapsedTime(rhs.elapsedTime), frame(rhs.frame), fps(rhs.fps)
+		  fps(rhs.fps), deltaTick()
 {
 
 }
 
 void Core::TickRate::calcFps()
 {
-	clock_t deltaTick;
-
+	double milisecond;
 	oldTick = curTick;
-	curTick = static_cast<int>(clock());
-	deltaTick = curTick - oldTick;
-	elapsedTime += deltaTick;
+	curTick = clock();
+	deltaTick += curTick - oldTick;
 	frame++;
-	fps = ((float)frame / (float)elapsedTime) * 1000000;
+
+	milisecond = (deltaTick / (double)CLOCKS_PER_SEC) * 1000.0;
+	if(milisecond > 1000.0) {
+		fps = static_cast<float>((float)frame * 0.5 + fps * 0.5);
+		frame = 0;
+		deltaTick -= CLOCKS_PER_SEC;
+		averageFrameTimeMilliseconds  = 1000.0/(fps==0?0.001:fps);
+	}
 }
+
+double Core::TickRate::getAverageFrameTimeMilliseconds() const
+{
+	return averageFrameTimeMilliseconds;
+}
+

@@ -12,6 +12,7 @@
 namespace View {
 	class ObjectViewer : public View::IViewer{
 	protected:
+		WINDOW *window;
 		Utils::List<Model::Object*> *objectsList;
 	public:
 		ObjectViewer();
