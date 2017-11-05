@@ -12,6 +12,7 @@
 #include "../control/IController.hpp"
 #include "../model/Object.hpp"
 #include "../view/ObjectViewer.hpp"
+#include "../event/IEvent.hpp"
 
 
 namespace Core {
@@ -24,6 +25,7 @@ namespace Core {
 		Utils::List<Control::IController*> controllerList;
 		Utils::List<Model::Object*> objectsList;
 		Utils::List<View::IViewer*> viewerList;
+		Utils::List<Event::IEvent*> eventList;
 		bool isExit;
 		bool isChange;
 		const float minFPS;
@@ -34,6 +36,7 @@ namespace Core {
 		void control();
 		void update();
 		void redrow();
+		void eventHandle();
 	public:
 		Application();
 		~Application();

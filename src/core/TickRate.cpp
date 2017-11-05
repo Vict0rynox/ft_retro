@@ -21,8 +21,7 @@ float Core::TickRate::getFps() const
 	return fps;
 }
 
-Core::TickRate::TickRate() : oldTick(0), curTick(0), fps(10),
-							 deltaTick()
+Core::TickRate::TickRate() : oldTick(0), curTick(0), fps()
 {
 
 }
@@ -42,30 +41,17 @@ Core::TickRate &Core::TickRate::operator=(const Core::TickRate &rhs)
 
 Core::TickRate::TickRate(const Core::TickRate &rhs)
 		: oldTick(rhs.oldTick), curTick(rhs.curTick),
-		  fps(rhs.fps), deltaTick()
+		  fps(rhs.fps)
 {
 
 }
 
 void Core::TickRate::calcFps()
 {
-	double milisecond;
+	float deltaTick;
 	oldTick = curTick;
 	curTick = clock();
-	deltaTick += curTick - oldTick;
-	frame++;
-
-	milisecond = (deltaTick / (double)CLOCKS_PER_SEC) * 1000.0;
-	if(milisecond > 1000.0) {
-		fps = static_cast<float>((float)frame * 0.5 + fps * 0.5);
-		frame = 0;
-		deltaTick -= CLOCKS_PER_SEC;
-		averageFrameTimeMilliseconds  = 1000.0/(fps==0?0.001:fps);
-	}
-}
-
-double Core::TickRate::getAverageFrameTimeMilliseconds() const
-{
-	return averageFrameTimeMilliseconds;
+	deltaTick = curTick - oldTick;
+	fps = (float)CLOCKS_PER_SEC / deltaTick;
 }
 

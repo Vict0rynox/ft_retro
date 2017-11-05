@@ -20,6 +20,7 @@ namespace Utils {
 		void pushNode(T node);
 		T popNode();
 		T popFrontNode();
+		void remove(T val);
 
 		//iterator
 		T curr();
@@ -159,6 +160,19 @@ template <class T>
 bool Utils::List<T>::isEnd()
 {
 	return current == nullptr;
+}
+
+template <class T>
+void Utils::List<T>::remove(T val)
+{
+	ListNode<T> *listNode;
+	while(node != nullptr){
+		listNode = node;
+		node = listNode->getPrev();
+		if(listNode->getValue() == val) {
+			delete listNode;
+		}
+	}
 }
 
 

@@ -12,12 +12,11 @@ void Core::Application::loop()
 {
 	while (!isExit) { //loop
 		tickRate.calcFps();
-		double sleepTime = 0;
-		if (tickRate.getFps() <= maxFPS) {
+		//if (tickRate.getFps() <= maxFPS) {
 			control();
 			update();
 			redrow();
-		}
+		//}
 	}
 	endwin();
 }
@@ -58,6 +57,22 @@ void Core::Application::redrow()
 	viewerList.reset();
 	refresh();
 }
+
+void Core::Application::eventHandle()
+{
+	Event::IEvent *event;
+	while (!eventList.isEnd()) {
+
+		event = eventList.curr();
+		event->handle();
+		eventList.prev();
+		if(event->isEnd()){
+			delete event;
+		}
+	}
+	eventList.reset();
+}
+
 
 Core::Application::Application(const Core::Application &rhs)
 		: maxFPS(rhs.maxFPS), minFPS(rhs.minFPS), sim(), isExit(rhs.isExit),

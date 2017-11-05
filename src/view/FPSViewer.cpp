@@ -22,7 +22,7 @@ View::FPSViewer::FPSViewer(const View::FPSViewer &rhs) :tickRate(rhs.tickRate), 
 void View::FPSViewer::render()
 {
 	werase(window);
-	mvwprintw(window,1,3, "FPS:%f", tickRate->getAverageFrameTimeMilliseconds());
+	mvwprintw(window,1,3, "FPS:%f", tickRate->getFps());
 	box(window, 0, 0);
 	wrefresh(window);
 }

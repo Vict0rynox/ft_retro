@@ -13,13 +13,9 @@ namespace Core {
 		clock_t oldTick;
 		clock_t curTick;
 		float fps;
-		double averageFrameTimeMilliseconds;
-		float deltaTick;
 		long frame;
 	public:
 		TickRate();
-
-		double getAverageFrameTimeMilliseconds() const;
 
 		~TickRate();
 
